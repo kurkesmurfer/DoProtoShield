@@ -7,6 +7,13 @@ ACDoMessage myDoMsg;
 main() {
   int TobeReportedToSense;
   
+  /* Message to request value of sensor
+     Requires id of sensor to allow 433 MHz Layer to
+     identify the device
+
+     Future: Maybe a separate namespace to unify id's?
+
+  */
 
   myDoMsg.cOntrol = 'b';
   myDoMsg.tYpe = 1;
@@ -19,7 +26,8 @@ main() {
   
   ACDoputMessage(&myDoMsg); // writes request to serial port
   
-  ACHDogetMessage(&myDoMsg); // reads reply from serial port
+  if (ACHDogetMessage(&myDoMsg)) // reads reply from serial port
+	ACDoprintMessage(&myDoMsg);
   
   TobeReportedToSense = myDoMsg.mSg.domotica.value;
   
